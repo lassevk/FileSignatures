@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileSignatures", "FileSignatures\FileSignatures.csproj", "{BE206934-6E0C-4E99-82D7-B8732BB417AB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileSignatures.Tests", "FileSignatures.Tests\FileSignatures.Tests.csproj", "{7035FA39-706A-4019-AF16-6BAE9D8CCD5F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8C926A06-6C23-4BD5-A94B-1C0FFDDAD14E}"
+	ProjectSection(SolutionItems) = preProject
+		EXAMPLES.markdown = EXAMPLES.markdown
+		LICENSE.markdown = LICENSE.markdown
+		README.markdown = README.markdown
+		Settings.FxCop = Settings.FxCop
+		Settings.StyleCop = Settings.StyleCop
+		SIGNING.markdown = SIGNING.markdown
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+		ReleaseBinaries|Any CPU = ReleaseBinaries|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BE206934-6E0C-4E99-82D7-B8732BB417AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE206934-6E0C-4E99-82D7-B8732BB417AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE206934-6E0C-4E99-82D7-B8732BB417AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE206934-6E0C-4E99-82D7-B8732BB417AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE206934-6E0C-4E99-82D7-B8732BB417AB}.ReleaseBinaries|Any CPU.ActiveCfg = ReleaseBinaries|Any CPU
+		{BE206934-6E0C-4E99-82D7-B8732BB417AB}.ReleaseBinaries|Any CPU.Build.0 = ReleaseBinaries|Any CPU
+		{7035FA39-706A-4019-AF16-6BAE9D8CCD5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7035FA39-706A-4019-AF16-6BAE9D8CCD5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7035FA39-706A-4019-AF16-6BAE9D8CCD5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7035FA39-706A-4019-AF16-6BAE9D8CCD5F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7035FA39-706A-4019-AF16-6BAE9D8CCD5F}.ReleaseBinaries|Any CPU.ActiveCfg = ReleaseBinaries|Any CPU
+		{7035FA39-706A-4019-AF16-6BAE9D8CCD5F}.ReleaseBinaries|Any CPU.Build.0 = ReleaseBinaries|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
