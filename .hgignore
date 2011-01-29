@@ -1,0 +1,7 @@
+glob:*.user
+glob:*.suo
+glob:*.[Cc]ache
+glob:*.[Bb]ak
+glob:[Bb]in/
+glob:[Oo]bj/
+glob:_ReSharper.*/
