@@ -50,10 +50,10 @@ namespace FileSignatures
         /// The full path to and name of the file to identify the contents of.
         /// </param>
         /// <returns>
-        /// An array of <see cref="ContentFormat"/> objects that identify the file contents.
+        /// An collection of <see cref="ContentFormat"/> objects that identify the file contents.
         /// </returns>
         /// <remarks>
-        /// Note that the returned array contains the <see cref="ContentFormat"/> objects
+        /// Note that the returned collection contains the <see cref="ContentFormat"/> objects
         /// ordered in such a way that the first one is deemed the one most likely to be
         /// correct, the next one less likely, the next one after that even less likely,
         /// and so on.
@@ -61,7 +61,10 @@ namespace FileSignatures
         /// <exception cref="ArgumentNullException">
         /// <para><paramref name="filename"/> is <c>null</c> or empty.</para>
         /// </exception>
-        public ContentFormat[] Identify(string filename)
+        /// <exception cref="FileNotFoundException">
+        /// <para><paramref name="filename"/> specifies a file that does not exist.</para>
+        /// </exception>
+        public IEnumerable<ContentFormat> Identify(string filename)
         {
             if (StringEx.IsNullOrWhiteSpace(filename))
                 throw new ArgumentNullException("filename");
@@ -79,10 +82,10 @@ namespace FileSignatures
         /// The <see cref="FileInfo"/> object that refers to the file.
         /// </param>
         /// <returns>
-        /// An array of <see cref="ContentFormat"/> objects that identify the file contents.
+        /// An collection of <see cref="ContentFormat"/> objects that identify the file contents.
         /// </returns>
         /// <remarks>
-        /// Note that the returned array contains the <see cref="ContentFormat"/> objects
+        /// Note that the returned collection contains the <see cref="ContentFormat"/> objects
         /// ordered in such a way that the first one is deemed the one most likely to be
         /// correct, the next one less likely, the next one after that even less likely,
         /// and so on.
@@ -90,7 +93,7 @@ namespace FileSignatures
         /// <exception cref="ArgumentNullException">
         /// <para><paramref name="file"/> is <c>null</c>.</para>
         /// </exception>
-        public ContentFormat[] Identify(FileInfo file)
+        public IEnumerable<ContentFormat> Identify(FileInfo file)
         {
             if (file == null)
                 throw new ArgumentNullException("file");
@@ -108,10 +111,10 @@ namespace FileSignatures
         /// The <see cref="Identify(System.IO.Stream)"/> object with the contents to identify.
         /// </param>
         /// <returns>
-        /// An array of <see cref="ContentFormat"/> objects that identify the stream contents.
+        /// An collection of <see cref="ContentFormat"/> objects that identify the stream contents.
         /// </returns>
         /// <remarks>
-        /// Note that the returned array contains the <see cref="ContentFormat"/> objects
+        /// Note that the returned collection contains the <see cref="ContentFormat"/> objects
         /// ordered in such a way that the first one is deemed the one most likely to be
         /// correct, the next one less likely, the next one after that even less likely,
         /// and so on.
@@ -122,7 +125,7 @@ namespace FileSignatures
         /// <exception cref="ArgumentException">
         /// <para>Unable to read from <paramref name="stream"/>, the <see cref="System.IO.Stream.CanRead"/> property returns false.</para>
         /// </exception>
-        public ContentFormat[] Identify(Stream stream)
+        public IEnumerable<ContentFormat> Identify(Stream stream)
         {
             if (stream == null)
                 throw new ArgumentNullException("stream");
@@ -140,10 +143,10 @@ namespace FileSignatures
         /// The <see cref="Byte"/>[] array containing the contents to identify.
         /// </param>
         /// <returns>
-        /// An array of <see cref="ContentFormat"/> objects that identify the byte array contents.
+        /// An collection of <see cref="ContentFormat"/> objects that identify the byte array contents.
         /// </returns>
         /// <remarks>
-        /// Note that the returned array contains the <see cref="ContentFormat"/> objects
+        /// Note that the returned collection contains the <see cref="ContentFormat"/> objects
         /// ordered in such a way that the first one is deemed the one most likely to be
         /// correct, the next one less likely, the next one after that even less likely,
         /// and so on.
@@ -151,7 +154,7 @@ namespace FileSignatures
         /// <exception cref="ArgumentNullException">
         /// <para><paramref name="data"/> is <c>null</c>.</para>
         /// </exception>
-        public ContentFormat[] Identify(byte[] data)
+        public IEnumerable<ContentFormat> Identify(byte[] data)
         {
             if (data == null)
                 throw new ArgumentNullException("data");
@@ -167,10 +170,10 @@ namespace FileSignatures
         /// The <see cref="IByteContainer"/> with the contents to identify.
         /// </param>
         /// <returns>
-        /// An array of <see cref="ContentFormat"/> objects that identify the <paramref name="container"/> contents.
+        /// An collection of <see cref="ContentFormat"/> objects that identify the <paramref name="container"/> contents.
         /// </returns>
         /// <remarks>
-        /// Note that the returned array contains the <see cref="ContentFormat"/> objects
+        /// Note that the returned collection contains the <see cref="ContentFormat"/> objects
         /// ordered in such a way that the first one is deemed the one most likely to be
         /// correct, the next one less likely, the next one after that even less likely,
         /// and so on.
