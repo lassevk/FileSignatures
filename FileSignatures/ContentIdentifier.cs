@@ -11,18 +11,18 @@ namespace FileSignatures
     /// This class implements a system for identifying file, stream, byte array, or similar contents
     /// in terms of file formats.
     /// </summary>
-    public sealed class Identifier
+    public sealed class ContentIdentifier
     {
-        private static readonly Identifier _Default = GetDefaultIdentifier();
+        private static readonly ContentIdentifier _Default = GetDefaultIdentifier();
         private readonly HashSet<Type> _Identifiers = new HashSet<Type>();
 
         /// <summary>
-        /// Gets the default <see cref="Identifier"/> instance.
+        /// Gets the default <see cref="ContentIdentifier"/> instance.
         /// </summary>
         /// <value>
-        /// The default <see cref="Identifier"/> instance.
+        /// The default <see cref="ContentIdentifier"/> instance.
         /// </value>
-        public static Identifier Default
+        public static ContentIdentifier Default
         {
             get
             {
@@ -31,15 +31,15 @@ namespace FileSignatures
         }
 
         /// <summary>
-        /// Creates and initializes the default <see cref="Identifier"/> instance.
+        /// Creates and initializes the default <see cref="ContentIdentifier"/> instance.
         /// </summary>
         /// <returns>
-        /// The default <see cref="Identifier"/> instance.
+        /// The default <see cref="ContentIdentifier"/> instance.
         /// </returns>
-        private static Identifier GetDefaultIdentifier()
+        private static ContentIdentifier GetDefaultIdentifier()
         {
-            var result = new Identifier();
-            result.ScanAssembly(typeof(Identifier).Assembly);
+            var result = new ContentIdentifier();
+            result.ScanAssembly(typeof(ContentIdentifier).Assembly);
             return result;
         }
 
