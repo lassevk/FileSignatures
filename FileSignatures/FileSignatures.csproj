@@ -57,10 +57,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ByteArrayContainer.cs" />
+    <Compile Include="ContentIdentifierAttribute.cs" />
     <Compile Include="IByteContainer.cs" />
-    <Compile Include="Identity.cs" />
-    <Compile Include="Identify.cs" />
+    <Compile Include="IContentIdentifier.cs" />
+    <Compile Include="ContentFormat.cs" />
+    <Compile Include="Identifier.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SimpleSignatures.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SimpleSignatures.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SimpleSignatures.Logic.cs">
+      <DependentUpon>SimpleSignatures.tt</DependentUpon>
+    </Compile>
     <Compile Include="StreamContainer.cs" />
     <Compile Include="StringEx.cs" />
   </ItemGroup>
@@ -68,6 +78,18 @@
     <None Include="..\FileSignatures.snk">
       <Link>FileSignatures.snk</Link>
     </None>
+    <None Include="SimpleSignatures.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>SimpleSignatures.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="SimpleSignatures.txt">
+      <DependentUpon>SimpleSignatures.tt</DependentUpon>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
