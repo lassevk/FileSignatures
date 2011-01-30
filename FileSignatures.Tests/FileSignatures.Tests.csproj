@@ -61,6 +61,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StreamContainerTests.cs" />
     <Compile Include="StringExTests.cs" />
+    <Compile Include="TestFilesTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FileSignatures\FileSignatures.csproj">
