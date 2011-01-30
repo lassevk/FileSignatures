@@ -35,9 +35,42 @@ namespace FileSignatures.Tests
         }
 
         [TestCaseSource("TestFiles")]
-        public void Test(string filename, string expectedIdentification)
+        public void Test_ByFiles(string filename, string expectedIdentification)
         {
             string identification = Identifier.Default.Identify(filename).Select(id => id.ToString()).FirstOrDefault() ?? string.Empty;
+
+            Assert.That(identification, Is.EqualTo(expectedIdentification));
+        }
+
+        [TestCaseSource("TestFiles")]
+        public void Test_ByFileInfo(string filename, string expectedIdentification)
+        {
+            string identification = Identifier.Default.Identify(new FileInfo(filename)).Select(id => id.ToString()).FirstOrDefault() ?? string.Empty;
+
+            Assert.That(identification, Is.EqualTo(expectedIdentification));
+        }
+
+        [TestCaseSource("TestFiles")]
+        public void Test_ByStream(string filename, string expectedIdentification)
+        {
+            string identification;
+            using (var stream = new FileStream(filename, FileMode.Open, FileAccess.Read))
+            {
+                identification = Identifier.Default.Identify(stream).Select(id => id.ToString()).FirstOrDefault() ?? string.Empty;
+            }
+            Assert.That(identification, Is.EqualTo(expectedIdentification));
+        }
+
+        [TestCaseSource("TestFiles")]
+        public void Test_ByByteArray(string filename, string expectedIdentification)
+        {
+            byte[] data;
+            using (var stream = new FileStream(filename, FileMode.Open, FileAccess.Read))
+            {
+                data = new byte[stream.Length];
+                stream.Read(data, 0, data.Length);
+            }
+            string identification = Identifier.Default.Identify(data).Select(id => id.ToString()).FirstOrDefault() ?? string.Empty;
 
             Assert.That(identification, Is.EqualTo(expectedIdentification));
         }
