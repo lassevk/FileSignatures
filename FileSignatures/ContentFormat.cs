@@ -10,14 +10,15 @@ namespace FileSignatures
     /// This struct holds information about identified contents, such as
     /// the content format category, the name, version number if applicable, etc.
     /// </summary>
-    public struct Identity : IEquatable<Identity>
+    public struct ContentFormat : IEquatable<ContentFormat>
     {
         private readonly string _Category;
+        private readonly int _Confidence;
         private readonly string _Name;
         private readonly string _Version;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Identity"/> struct.
+        /// Initializes a new instance of the <see cref="ContentFormat"/> struct.
         /// </summary>
         /// <param name="category">
         /// The category of the identified file format.
@@ -29,6 +30,10 @@ namespace FileSignatures
         /// The version of the identified file format, if applicable;
         /// otherwise, <see cref="String.Empty"/>.
         /// </param>
+        /// <param name="confidence">
+        /// The confidence of the match, in terms of number of bytes that matched up
+        /// with the given content.
+        /// </param>
         /// <exception cref="ArgumentNullException">
         /// <para><paramref name="category"/> is <c>null</c> or empty.</para>
         /// <para>- or -</para>
@@ -36,7 +41,10 @@ namespace FileSignatures
         /// <para>- or -</para>
         /// <para><paramref name="version"/> is <c>null</c>.</para>
         /// </exception>
-        public Identity(string category, string name, string version)
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// <para><paramref name="confidence"/> is zero or less.</para>
+        /// </exception>
+        public ContentFormat(string category, string name, string version, int confidence)
         {
             if (StringEx.IsNullOrWhiteSpace(category))
                 throw new ArgumentNullException("category");
@@ -44,10 +52,13 @@ namespace FileSignatures
                 throw new ArgumentNullException("name");
             if (version == null)
                 throw new ArgumentNullException("version");
+            if (confidence <= 0)
+                throw new ArgumentOutOfRangeException("confidence", confidence, "confidence must be greater than zero");
 
             _Category = category.Trim();
             _Name = name.Trim();
             _Version = version.Trim();
+            _Confidence = confidence;
         }
 
         /// <summary>
@@ -84,7 +95,20 @@ namespace FileSignatures
             }
         }
 
-        #region IEquatable<Identity> Members
+        /// <summary>
+        /// Gets the number of bytes used from the underlying content bytes to match the
+        /// format of the contents, used to indicate whether a given content format
+        /// is more likely to be the correct one compared to a different format.
+        /// </summary>
+        public int Confidence
+        {
+            get
+            {
+                return _Confidence;
+            }
+        }
+
+        #region IEquatable<ContentFormat> Members
 
         /// <summary>
         /// Indicates whether the current object is equal to another object of the same type.
@@ -95,9 +119,10 @@ namespace FileSignatures
         /// <param name="other">
         /// An object to compare with this object.
         /// </param>
-        public bool Equals(Identity other)
+        public bool Equals(ContentFormat other)
         {
-            return Equals(other._Category, _Category) && Equals(other._Name, _Name) && Equals(other._Version, _Version);
+            return Equals(other._Category, _Category) && Equals(other._Name, _Name) && Equals(other._Version, _Version) &&
+                   (other._Confidence == _Confidence);
         }
 
         #endregion
@@ -106,16 +131,16 @@ namespace FileSignatures
         /// Implements the operator ==, equality comparison.
         /// </summary>
         /// <param name="left">
-        /// The left <see cref="Identity"/> operand.
+        /// The left <see cref="ContentFormat"/> operand.
         /// </param>
         /// <param name="right">
-        /// The right <see cref="Identity"/> operand.
+        /// The right <see cref="ContentFormat"/> operand.
         /// </param>
         /// <returns>
-        /// <c>true</c> if the two <see cref="Identity"/> operands contains the same values;
+        /// <c>true</c> if the two <see cref="ContentFormat"/> operands contains the same values;
         /// otherwise, <c>false</c>.
         /// </returns>
-        public static bool operator ==(Identity left, Identity right)
+        public static bool operator ==(ContentFormat left, ContentFormat right)
         {
             return left.Equals(right);
         }
@@ -124,29 +149,29 @@ namespace FileSignatures
         /// Implements the operator !=, inequality comparison.
         /// </summary>
         /// <param name="left">
-        /// The left <see cref="Identity"/> operand.
+        /// The left <see cref="ContentFormat"/> operand.
         /// </param>
         /// <param name="right">
-        /// The right <see cref="Identity"/> operand.
+        /// The right <see cref="ContentFormat"/> operand.
         /// </param>
         /// <returns>
-        /// <c>true</c> if the two <see cref="Identity"/> operands contains different values;
+        /// <c>true</c> if the two <see cref="ContentFormat"/> operands contains different values;
         /// otherwise, <c>false</c> if they contain the same values.
         /// </returns>
-        public static bool operator !=(Identity left, Identity right)
+        public static bool operator !=(ContentFormat left, ContentFormat right)
         {
             return !left.Equals(right);
         }
 
         /// <summary>
-        /// Determines whether the specified <see cref="Object"/> is equal to the current <see cref="Identity"/>.
+        /// Determines whether the specified <see cref="Object"/> is equal to the current <see cref="ContentFormat"/>.
         /// </summary>
         /// <returns>
-        /// <c>true</c> if the specified <see cref="Object"/> is equal to the current <see cref="Identity"/>;
+        /// <c>true</c> if the specified <see cref="Object"/> is equal to the current <see cref="ContentFormat"/>;
         /// otherwise, <c>false</c>.
         /// </returns>
         /// <param name="obj">
-        /// The <see cref="Object"/> to compare with the current <see cref="Identity"/>. 
+        /// The <see cref="Object"/> to compare with the current <see cref="ContentFormat"/>. 
         /// </param>
         /// <exception cref="NullReferenceException">
         /// The <paramref name="obj"/> parameter is null.
@@ -154,15 +179,15 @@ namespace FileSignatures
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
-            if (obj.GetType() != typeof(Identity)) return false;
-            return Equals((Identity)obj);
+            if (obj.GetType() != typeof(ContentFormat)) return false;
+            return Equals((ContentFormat)obj);
         }
 
         /// <summary>
         /// Serves as a hash function for a particular type. 
         /// </summary>
         /// <returns>
-        /// A hash code for the current <see cref="Identity"/>.
+        /// A hash code for the current <see cref="ContentFormat"/>.
         /// </returns>
         public override int GetHashCode()
         {
@@ -171,15 +196,16 @@ namespace FileSignatures
                 int result = _Category != null ? _Category.GetHashCode() : 0;
                 result = (result * 397) ^ (_Name != null ? _Name.GetHashCode() : 0);
                 result = (result * 397) ^ (_Version != null ? _Version.GetHashCode() : 0);
+                result = (result * 397) ^ _Confidence.GetHashCode();
                 return result;
             }
         }
 
         /// <summary>
-        /// Returns a <see cref="String"/> that represents the current <see cref="Identity"/>.
+        /// Returns a <see cref="String"/> that represents the current <see cref="ContentFormat"/>.
         /// </summary>
         /// <returns>
-        /// A <see cref="String"/> that represents the current <see cref="Identity"/>.
+        /// A <see cref="String"/> that represents the current <see cref="ContentFormat"/>.
         /// </returns>
         /// <remarks>
         /// The <see cref="String"/> will be on the format "<see cref="Category"/>/<see cref="Name"/>/<see cref="Version"/>"
