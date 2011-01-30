@@ -35,6 +35,14 @@ namespace FileSignatures.Tests
             Assert.That(format.Category, Is.EqualTo(expected));
         }
 
+        [TestCase(0)]
+        [TestCase(-1)]
+        [TestCase(-10)]
+        public void Constructor_NegativeOrZeroConfidence_ThrowsArgumentOutOfRangeException(int input)
+        {
+            Assert.Throws<ArgumentOutOfRangeException>(() => new ContentFormat("category", "name", "version", input));
+        }
+
         [TestCase("name", "name")]
         [TestCase(" \t\r\n name \t\r\n", "name")]
         [TestCase(" \t\r\n x \t\r\n", "x")]
