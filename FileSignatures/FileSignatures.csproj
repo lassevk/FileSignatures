@@ -39,7 +39,7 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>..\FileSignatures.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\Lasse V. Karlsen.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseBinaries|AnyCPU'">
     <OutputPath>bin\ReleaseBinaries\</OutputPath>
@@ -75,8 +75,8 @@
     <Compile Include="StringEx.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\FileSignatures.snk">
-      <Link>FileSignatures.snk</Link>
+    <None Include="..\Lasse V. Karlsen.snk">
+      <Link>Lasse V. Karlsen.snk</Link>
     </None>
     <None Include="SimpleSignatures.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
