@@ -14,7 +14,6 @@
         <INITIALIZER_BRACES>NEXT_LINE</INITIALIZER_BRACES>
         <KEEP_BLANK_LINES_IN_CODE>1</KEEP_BLANK_LINES_IN_CODE>
         <KEEP_BLANK_LINES_IN_DECLARATIONS>1</KEEP_BLANK_LINES_IN_DECLARATIONS>
-        <KEEP_USER_LINEBREAKS>False</KEEP_USER_LINEBREAKS>
         <MODIFIERS_ORDER IsNull="False">
           <Item>public</Item>
           <Item>protected</Item>
@@ -36,7 +35,6 @@
         <PLACE_FIELD_ATTRIBUTE_ON_SAME_LINE>False</PLACE_FIELD_ATTRIBUTE_ON_SAME_LINE>
         <PLACE_SIMPLE_ACCESSOR_ON_SINGLE_LINE>False</PLACE_SIMPLE_ACCESSOR_ON_SINGLE_LINE>
         <PLACE_SIMPLE_ANONYMOUSMETHOD_ON_SINGLE_LINE>False</PLACE_SIMPLE_ANONYMOUSMETHOD_ON_SINGLE_LINE>
-        <PLACE_SIMPLE_INITIALIZER_ON_SINGLE_LINE>False</PLACE_SIMPLE_INITIALIZER_ON_SINGLE_LINE>
         <PLACE_SIMPLE_LINQ_ON_SINGLE_LINE>False</PLACE_SIMPLE_LINQ_ON_SINGLE_LINE>
         <PLACE_TYPE_CONSTRAINTS_ON_SAME_LINE>False</PLACE_TYPE_CONSTRAINTS_ON_SAME_LINE>
         <SPACE_AFTER_TYPECAST_PARENTHESES>False</SPACE_AFTER_TYPECAST_PARENTHESES>
@@ -47,7 +45,8 @@
         <STICK_COMMENT>False</STICK_COMMENT>
         <WRAP_AFTER_DECLARATION_LPAR>True</WRAP_AFTER_DECLARATION_LPAR>
         <WRAP_AFTER_INVOCATION_LPAR>True</WRAP_AFTER_INVOCATION_LPAR>
-        <WRAP_LIMIT>150</WRAP_LIMIT>
+        <WRAP_LIMIT>160</WRAP_LIMIT>
+        <WRAP_LINES>False</WRAP_LINES>
       </FormatSettings>
       <UsingsSettings>
         <KeepImports IsNull="False">
@@ -83,6 +82,12 @@
         <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="EnumMember" />
         <PredefinedRule Inspect="True" Prefix="" Suffix="" Style="AaBb" ElementKind="Other" />
       </Naming2>
+      <CustomMemberReorderingPatterns><![CDATA[<?xml version="1.0" encoding="utf-8" ?>
+
+<Patterns xmlns="urn:shemas-jetbrains-com:member-reordering-patterns">
+  
+</Patterns>
+]]></CustomMemberReorderingPatterns>
     </CSharp>
     <VB>
       <FormatSettings />

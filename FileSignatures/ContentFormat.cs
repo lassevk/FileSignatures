@@ -121,8 +121,7 @@ namespace FileSignatures
         /// </param>
         public bool Equals(ContentFormat other)
         {
-            return Equals(other._Category, _Category) && Equals(other._Name, _Name) && Equals(other._Version, _Version) &&
-                   (other._Confidence == _Confidence);
+            return Equals(other._Category, _Category) && Equals(other._Name, _Name) && Equals(other._Version, _Version) && (other._Confidence == _Confidence);
         }
 
         #endregion
@@ -178,8 +177,10 @@ namespace FileSignatures
         /// </exception>
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj)) return false;
-            if (obj.GetType() != typeof(ContentFormat)) return false;
+            if (ReferenceEquals(null, obj))
+                return false;
+            if (obj.GetType() != typeof(ContentFormat))
+                return false;
             return Equals((ContentFormat)obj);
         }
 
