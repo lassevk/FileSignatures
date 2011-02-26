@@ -262,5 +262,44 @@ namespace FileSignatures
 
             return string.Format(CultureInfo.InvariantCulture, "{0}/{1}", Category, Name);
         }
+
+        /// <summary>
+        /// Returns whether the other format is considered to be the same as this one, used to
+        /// combine several identified formats into just one, with an increased confidence.
+        /// </summary>
+        /// <param name="format">
+        /// The other <see cref="ContentFormat"/> to compare with.
+        /// </param>
+        /// <returns>
+        /// <c>true</c> if this <see cref="ContentFormat"/> is the same as the <paramref name="format"/>;
+        /// otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsSameFormat(ContentFormat format)
+        {
+            return format._Category == _Category && format._Name == _Name && format._Version == _Version && format._MimeType == _MimeType && format._FileExtension == _FileExtension;
+        }
+
+        /// <summary>
+        /// Combines the two <see cref="ContentFormat"/> values into one, with an increased confidence.
+        /// </summary>
+        /// <param name="format1">
+        /// The first <see cref="ContentFormat"/>, to be combined with <paramref name="format2"/>.
+        /// </param>
+        /// <param name="format2">
+        /// The second <see cref="ContentFormat"/>, to be combined with <paramref name="format1"/>.
+        /// </param>
+        /// <returns>
+        /// The combined ContentFormat value.
+        /// </returns>
+        /// <exception cref="InvalidOperationException">
+        /// The two <see cref="ContentFormat"/> values are not considered the same, cannot combine.
+        /// </exception>
+        public static ContentFormat Combine(ContentFormat format1, ContentFormat format2)
+        {
+            if (!format1.IsSameFormat(format2))
+                throw new InvalidOperationException("The two ContentFormat values are not considered to be the same type");
+
+            return new ContentFormat(format1.Category, format1.Name, format1.Version, format1.Confidence + format2.Confidence, format1.MimeType, format1.FileExtension);
+        }
     }
 }

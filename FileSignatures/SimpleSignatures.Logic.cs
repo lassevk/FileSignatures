@@ -10,7 +10,7 @@ namespace FileSignatures
     /// </summary>
     internal partial class SimpleSignatures
     {
-        internal static bool Match(IByteContainer container, int offset, short[] values)
+        internal static bool Match(IByteContainer container, int offset, object[] values)
         {
             long realOffset = offset;
             if (realOffset < 0)
@@ -21,7 +21,24 @@ namespace FileSignatures
             if (values.Length != fromContainer.Length)
                 return false;
 
-            return !values.Where((t, index) => t != -1 && t != fromContainer[index]).Any();
+            for (int index = 0; index < values.Length; index++)
+            {
+                object value = values[index];
+                byte[] bytes = value as byte[];
+                if (bytes != null)
+                {
+                    if (!bytes.Any(b => fromContainer[index] == b))
+                        return false;
+                }
+                else if (value is int)
+                {
+                    var i = (int)value;
+                    if (i != -1 && fromContainer[index] != i)
+                        return false;
+                }
+            }
+
+            return true;
         }
     }
 }
