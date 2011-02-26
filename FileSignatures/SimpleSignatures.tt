@@ -59,7 +59,20 @@ namespace FileSignatures
     {
         if (data[index].StartsWith("."))
         {
-            string[] parts = data[index].Substring(1).Trim().Split('/');
+            string mimeType = "string.Empty";
+            string line = data[index];
+            int mimeIndex = line.IndexOf('(');
+            if (mimeIndex > 0)
+            {
+                mimeType = line.Substring(mimeIndex + 1);
+                mimeType = mimeType.Substring(0, mimeType.Length - 1);
+                line = line.Substring(0, mimeIndex).Trim();
+
+                if (mimeType == "*")
+                    mimeType = line.Substring(1);
+                mimeType = "\"" + mimeType + "\"";
+            }
+            string[] parts = line.Substring(1).Trim().Split('/');
             if (parts.Length < 2 || parts.Length > 3)
             {
 #>
@@ -102,6 +115,7 @@ namespace FileSignatures
             if (parts.Length == 2)
                 partsOutput.Add("string.Empty");
             partsOutput.Add(length.ToString());
+            partsOutput.Add(mimeType);
 #>
             if (isMatch)
                 yield return new ContentFormat(<#= string.Join(", ", partsOutput) #>);
