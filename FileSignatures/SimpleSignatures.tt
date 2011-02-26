@@ -92,11 +92,7 @@ namespace FileSignatures
                 {
                     var numbers = ma.Groups["number"].Captures.OfType<Capture>().SelectMany(c => formatNumber(c.Value)).ToArray();
 #>
-            isMatch = <#= !first ? "isMatch && " : "" #>Match(
-                container, 0x<#= ma.Groups["offset"].Value #>, new short[]
-                {
-                    <#= string.Join(", ", numbers) #>
-                });
+            isMatch = <#= !first ? "isMatch && " : "" #>Match(container, 0x<#= ma.Groups["offset"].Value #>, new short[] { <#= string.Join(", ", numbers) #> });
 <#
                     length = length + numbers.Where(n => n != "-1").Count();
                 }
