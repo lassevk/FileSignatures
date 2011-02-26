@@ -26,6 +26,15 @@
 .archive/xz (application/x-xz) .xm
 00000000: fd '7zXZ' 00
 
+.archive/iso (application/x-iso9660-image) .iso
+00008000: .. 'CD001'
+
+.archive/iso (application/x-iso9660-image) .iso
+00008800: .. 'CD001'
+
+.archive/iso (application/x-iso9660-image) .iso
+00009000: .. 'CD001'
+
 ; *************************************************
 ; Images
 ; *************************************************
@@ -97,6 +106,21 @@
 .video/mkv (video/x-matroska) .mkv
 00000000: 1A 45 DF A3 93 42 82 88 6D 61 74 72 6F 73 6B 61
 
+.video/avi (video/avi) .avi
+00000000: 'RIFF' .. .. .. .. 'AVI LIST'
+
+.video/mp4 .mp4
+00000000: 00 00 00 14/20 'ftyp3gp5'
+
+.video/m4v .m4v
+00000000: 00 00 00 ' ftypM4V '
+
+.video/mp4 .mp4
+00000000: 00 00 00 20/18 'ftypisom'
+
+.video/mpg (video/mpg) .mpg
+00000000: 00 00 01 Bx
+
 ; *************************************************
 ; Executable Files and libraries
 ; *************************************************
@@ -123,25 +147,15 @@
 
 .document/pdf (application/pdf) .pdf
 00000000: '%PDF'
--0000006: '%%EOF' 0a
-
-.document/pdf (application/pdf) .pdf
-00000000: '%PDF'
--0000006: '%%EOF' 0d
+-0000006: '%%EOF' 0a/0d
 
 .document/pdf (application/pdf) .pdf
 00000000: '%PDF'
 -0000007: '%%EOF' 0d 0a
 
-; *************************************************
-; Text Files
-; *************************************************
-
-.text/linqpad (text/plain) .linq
-00000000: '<Query Kind="'
-
-.text/xml (text/xml) .xml
-00000000: '<?xml'
+.document/pdf (application/pdf) .pdf
+00000000: '%PDF'
+-0000005: '%%EOF'
 
 ; *************************************************
 ; Miscellaneous

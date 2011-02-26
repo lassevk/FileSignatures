@@ -52,6 +52,9 @@
     <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ObjectDumper">
+      <HintPath>..\..\ObjectDumper\ObjectDumper\bin\Debug\ObjectDumper.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
   </ItemGroup>
@@ -73,6 +76,7 @@
     </Compile>
     <Compile Include="StreamContainer.cs" />
     <Compile Include="StringEx.cs" />
+    <Compile Include="TextFiles.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Lasse V. Karlsen.snk">

@@ -69,7 +69,7 @@ namespace FileSignatures
             if (StringEx.IsNullOrWhiteSpace(filename))
                 throw new ArgumentNullException("filename");
 
-            using (var stream = new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.Read))
+            using (var stream = new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
                 return Identify(stream);
             }
@@ -194,6 +194,20 @@ namespace FileSignatures
                 {
                     formats.AddRange(identifier.Identify(container));
                 }
+            }
+            formats = formats.OrderBy(f => f.ToString()).ToList();
+
+            // combine duplicates
+            int index = 0;
+            while (index < formats.Count - 1)
+            {
+                if (formats[index].IsSameFormat(formats[index + 1]))
+                {
+                    formats[index] = ContentFormat.Combine(formats[index], formats[index + 1]);
+                    formats.RemoveAt(index + 1);
+                }
+                else
+                    index++;
             }
             return formats.OrderByDescending(f => f.Confidence).ToArray();
         }
