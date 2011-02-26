@@ -80,6 +80,15 @@ namespace FileSignatures
             if (isMatch)
                 yield return new ContentFormat("archive", "wim", string.Empty, 6, string.Empty);
 
+            // archive/xz (application/x-xz)
+            isMatch = Match(
+                container, 0x00000000, new short[]
+                {
+                    0xfd, 0x37, 0x7a, 0x58, 0x5a, 0x00
+                });
+            if (isMatch)
+                yield return new ContentFormat("archive", "xz", string.Empty, 6, "application/x-xz");
+
             // image/bmp (*)
             isMatch = Match(
                 container, 0x00000000, new short[]
@@ -260,14 +269,14 @@ namespace FileSignatures
             if (isMatch)
                 yield return new ContentFormat("audio", "wave", string.Empty, 8, "audio/x-wav");
 
-            // audio/ogg
+            // audio/ogg (application/ogg)
             isMatch = Match(
                 container, 0x00000000, new short[]
                 {
-                    0x4f, 0x67, 0x67
+                    0x4f, 0x67, 0x67, 0x53
                 });
             if (isMatch)
-                yield return new ContentFormat("audio", "ogg", string.Empty, 3, string.Empty);
+                yield return new ContentFormat("audio", "ogg", string.Empty, 4, "application/ogg");
 
             // audio/midi (audio/mid)
             isMatch = Match(
