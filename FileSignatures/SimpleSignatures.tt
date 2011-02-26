@@ -11,7 +11,7 @@ var data = File.ReadAllLines(Host.TemplateFile.Replace(".tt", ".txt"))
     .Where(l => !l.StartsWith(";"))
     .ToArray();
 
-var re = new Regex(@"^(?<offset>[0-9a-f]{8}):\s+(?<number>([0-9a-f]{2}|'[^']+'|\.\.?))(\s+(?<number>([0-9a-f]{2}|'[^']+'|\.\.?)))*\s*$", RegexOptions.IgnoreCase);
+var re = new Regex(@"^(?<end>-)?(?<offset>[0-9a-f]{8}):\s+(?<number>([0-9a-f]{2}|'[^']+'|\.\.?))(\s+(?<number>([0-9a-f]{2}|'[^']+'|\.\.?)))*\s*$", RegexOptions.IgnoreCase);
 Func<string, string> formatted = delegate(string s)
 {
     s = s.Replace("\n", "\\n").Replace("\r", "\\r").Replace("\t", "\\t").Replace("\"", "\\\"");
@@ -90,7 +90,7 @@ namespace FileSignatures
                 {
                     var numbers = ma.Groups["number"].Captures.OfType<Capture>().SelectMany(c => formatNumber(c.Value)).ToArray();
 #>
-            isMatch = <#= !first ? "isMatch && " : "" #>Match(container, 0x<#= ma.Groups["offset"].Value #>, new short[] { <#= string.Join(", ", numbers) #> });
+            isMatch = <#= !first ? "isMatch && " : "" #>Match(container, <#= ma.Groups["end"].Value #>0x<#= ma.Groups["offset"].Value #>, new short[] { <#= string.Join(", ", numbers) #> });
 <#
                     length = length + numbers.Where(n => n != "-1").Count();
                 }

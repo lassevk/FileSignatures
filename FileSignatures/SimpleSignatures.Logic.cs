@@ -12,15 +12,16 @@ namespace FileSignatures
     {
         internal static bool Match(IByteContainer container, int offset, short[] values)
         {
-            byte[] fromContainer = container.Read(offset, values.Length);
+            long realOffset = offset;
+            if (realOffset < 0)
+                realOffset += container.Length;
+            if (realOffset < 0)
+                realOffset = 0;
+            byte[] fromContainer = container.Read(realOffset, values.Length);
             if (values.Length != fromContainer.Length)
                 return false;
 
-            for (int index = 0; index < values.Length; index++)
-                if (values[index] != -1 && values[index] != fromContainer[index])
-                    return false;
-
-            return true;
+            return !values.Where((t, index) => t != -1 && t != fromContainer[index]).Any();
         }
     }
 }

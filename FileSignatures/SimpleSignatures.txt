@@ -55,7 +55,7 @@
 00000000: 0a 05 01
 
 .image/png (*)
-00000000: '.PNG' 0d 0a 1a 0a
+00000000: 89 'PNG' 0d 0a 1a 0a
 
 .image/gif (*)
 00000000: 'GIF89a'
@@ -83,6 +83,9 @@
 
 .image/tiff/intel (image/tiff)
 00000000: 'II*' 00
+
+.image/tga (image/x-tga)
+-00000012: 'TRUEVISION-XFILE.' 00
 
 ; *************************************************
 ; Executable Files and libraries
