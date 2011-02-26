@@ -17,14 +17,10 @@ namespace FileSignatures.Tests
             {
                 string path = Path.GetFullPath(Path.Combine(Assembly.GetExecutingAssembly().Location, @"..\..\..\..\TestFiles"));
 
-                yield return new[]
-                {
-                    Path.Combine(path, "archive.7z"), "archive/7z"
-                };
-                yield return new[]
-                {
-                    Path.Combine(path, "archive.zip"), "archive/zip"
-                };
+                yield return new[] { Path.Combine(path, "archive.7z"), "archive/7z" };
+                yield return new[] { Path.Combine(path, "archive.zip"), "archive/zip" };
+                yield return new[] { Path.Combine(path, "archive.gz"), "archive/gzip" };
+                yield return new[] { Path.Combine(path, "archive.bz2"), "archive/bzip/2" };
 
                 // yield return new[] { Path.Combine(path, "image.png"), "image/png" };
                 // yield return new[] { Path.Combine(path, "image.jpg"), "image/jpeg" };

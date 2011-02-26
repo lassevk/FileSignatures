@@ -2,24 +2,115 @@
 ; Archives
 ; *************************************************
 
-.archive/zip
-00000000: 50 4b 03 04
+.archive/zip (application/zip)
+00000000: 'PK' 03 04
 
-.archive/7z
+.archive/7z (application/x-7z-compressed)
 00000000: '7z' bc af 27 1c
+
+.archive/cab (application/vnd.ms-cab-compressed)
+00000000: 'MSCF' 00 00 00 00
+
+.archive/bzip/2 (application/x-bzip)
+00000000: 'BZh' .. 31 41 59 26 53 59
+
+.archive/bzip/1
+00000000: 'BZ0' .. 31 41 59 26 53 59
+
+.archive/gzip (application/x-gzip)
+00000000: 1f 8b
+
+.archive/wim
+00000000: 'MSWIM' 00
 
 ; *************************************************
 ; Images
 ; *************************************************
 
-.image/bmp
+.image/bmp (*)
 00000000: 'BM'
 
-.image/jpeg
-00000000: .. .. ff e0 .. .. 'JFIF'
+.image/jpeg (*)
+00000000: ff d8
 
-.image/png
-00000000: 89 'PNG' 0d 0a 1a 0a
+.image/jpeg2000 (image/jp2)
+00000000: 00 00 00 0C 6A 50 20 20 0D 0A 87 0A 00 00 00 14 66 74 79 70 6A 70 32
 
-.image/gif
+.image/pcx/2.5 (image/x-pcx)
+00000000: 0a 00
+
+.image/pcx/2.8 (image/x-pcx)
+00000000: 0a 02
+
+.image/pcx/2.8 (image/x-pcx)
+00000000: 0a 03
+
+.image/pcx/4 (image/x-pcx)
+00000000: 0a 04
+
+.image/pcx/5 (image/x-pcx)
+00000000: 0a 05 01
+
+.image/png (*)
+00000000: '.PNG' 0d 0a 1a 0a
+
+.image/gif (*)
 00000000: 'GIF89a'
+
+.image/portable-bitmap/ascii (image/x-portable-bitmap)
+00000000: 'P1'
+
+.image/portable-graymap/ascii (image/x-portable-graymap)
+00000000: 'P2'
+
+.image/portable-pixmap/ascii (image/x-portable-pixmap)
+00000000: 'P3'
+
+.image/portable-bitmap/binary (image/x-portable-bitmap)
+00000000: 'P4'
+
+.image/portable-graymap/binary (image/x-portable-graymap)
+00000000: 'P5'
+
+.image/portable-pixmap/binary (image/x-portable-pixmap)
+00000000: 'P6'
+
+.image/tiff/motorola (image/tiff)
+00000000: 'MM' 00 '*'
+
+.image/tiff/intel (image/tiff)
+00000000: 'II*' 00
+
+; *************************************************
+; Executable Files and libraries
+; *************************************************
+
+.executable/portable
+00000000: 'MZ'
+
+; *************************************************
+; Audio Files
+; *************************************************
+
+.audio/wave (audio/x-wav)
+00000000: 'RIFF' .. .. .. .. 'WAVE'
+
+.audio/ogg
+00000000: 'Ogg'
+
+.audio/midi (audio/mid)
+00000000: 'MThd'
+
+; *************************************************
+; Document Files
+; *************************************************
+
+.document/pdf (application/pdf)
+00000000: '%PDF-'
+
+; *************************************************
+; Text Files
+; *************************************************
+
+.text/linqpad (text/plain)
+00000000: '<Query Kind="'
