@@ -96,7 +96,7 @@ namespace FileSignatures
                 yield return new ContentFormat("image", "pcx", "5", 3, "image/x-pcx");
 
             // image/png (*)
-            isMatch = Match(container, 0x00000000, new short[] { 0x2e, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a });
+            isMatch = Match(container, 0x00000000, new short[] { 0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a });
             if (isMatch)
                 yield return new ContentFormat("image", "png", string.Empty, 8, "image/png");
 
@@ -144,6 +144,11 @@ namespace FileSignatures
             isMatch = Match(container, 0x00000000, new short[] { 0x49, 0x49, 0x2a, 0x00 });
             if (isMatch)
                 yield return new ContentFormat("image", "tiff", "intel", 4, "image/tiff");
+
+            // image/tga (image/x-tga)
+            isMatch = Match(container, -0x00000012, new short[] { 0x54, 0x52, 0x55, 0x45, 0x56, 0x49, 0x53, 0x49, 0x4f, 0x4e, 0x2d, 0x58, 0x46, 0x49, 0x4c, 0x45, 0x2e, 0x00 });
+            if (isMatch)
+                yield return new ContentFormat("image", "tga", string.Empty, 18, "image/x-tga");
 
             // executable/portable
             isMatch = Match(container, 0x00000000, new short[] { 0x4d, 0x5a });
