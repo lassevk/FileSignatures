@@ -315,6 +315,16 @@ namespace FileSignatures
             if (isMatch)
                 yield return new ContentFormat("image", "tga", string.Empty, 18, "image/x-tga", ".tga");
 
+            // image/ico (image/vnd.microsoft.icon) .ico
+            isMatch = Match(
+                container, 0x00000000,
+                new object[]
+                {
+                    0x00, 0x00, 0x01, 0x00
+                });
+            if (isMatch)
+                yield return new ContentFormat("image", "ico", string.Empty, 4, "image/vnd.microsoft.icon", ".ico");
+
             // video/wmv (video/x-ms-wmv) .wmv
             isMatch = Match(
                 container, 0x00000000,
@@ -473,7 +483,37 @@ namespace FileSignatures
             if (isMatch)
                 yield return new ContentFormat("document", "pdf", string.Empty, 9, "application/pdf", ".pdf");
 
-            // error-correction/par2 .par2
+            // document/chm (application/x-chm) .chm
+            isMatch = Match(
+                container, 0x00000000,
+                new object[]
+                {
+                    0x49, 0x54, 0x53, 0x46
+                });
+            if (isMatch)
+                yield return new ContentFormat("document", "chm", string.Empty, 4, "application/x-chm", ".chm");
+
+            // debug/pdb .pdb
+            isMatch = Match(
+                container, 0x00000000,
+                new object[]
+                {
+                    0x4d, 0x69, 0x63, 0x72, 0x6f, 0x73, 0x6f, 0x66, 0x74, 0x20, 0x43, 0x2f, 0x43, 0x2b, 0x2b
+                });
+            if (isMatch)
+                yield return new ContentFormat("debug", "pdb", string.Empty, 15, string.Empty, ".pdb");
+
+            // development/snk (application/octet-stream) .snk
+            isMatch = Match(
+                container, 0x00000000,
+                new object[]
+                {
+                    0x07, 0x02, 0x00, 0x00, 0x00, 0x24, 0x00, 0x00
+                });
+            if (isMatch)
+                yield return new ContentFormat("development", "snk", string.Empty, 8, "application/octet-stream", ".snk");
+
+            // misc/par2 .par2
             isMatch = Match(
                 container, 0x00000000,
                 new object[]
@@ -481,7 +521,27 @@ namespace FileSignatures
                     0x50, 0x41, 0x52, 0x32, 0x00, 0x50, 0x4b, 0x54
                 });
             if (isMatch)
-                yield return new ContentFormat("error-correction", "par2", string.Empty, 8, string.Empty, ".par2");
+                yield return new ContentFormat("misc", "par2", string.Empty, 8, string.Empty, ".par2");
+
+            // misc/uce .uce
+            isMatch = Match(
+                container, 0x00000000,
+                new object[]
+                {
+                    0x55, 0x43, 0x45
+                });
+            if (isMatch)
+                yield return new ContentFormat("misc", "uce", string.Empty, 3, string.Empty, ".uce");
+
+            // misc/sfm .sfm
+            isMatch = Match(
+                container, 0x00000000,
+                new object[]
+                {
+                    0x52, 0x53, 0x46, 0x4d
+                });
+            if (isMatch)
+                yield return new ContentFormat("misc", "sfm", string.Empty, 4, string.Empty, ".sfm");
 
             yield break;
         }

@@ -96,6 +96,9 @@
 .image/tga (image/x-tga) .tga
 -0000012: 'TRUEVISION-XFILE.' 00
 
+.image/ico (image/vnd.microsoft.icon) .ico
+00000000: 00 00 01 00
+
 ; *************************************************
 ; Video Files
 ; *************************************************
@@ -157,9 +160,28 @@
 00000000: '%PDF'
 -0000005: '%%EOF'
 
+.document/chm (application/x-chm) .chm
+00000000: 'ITSF'
+
+; *************************************************
+; Development Files
+; *************************************************
+
+.debug/pdb .pdb
+00000000: 'Microsoft C/C++'
+
+.development/snk (application/octet-stream) .snk
+00000000: 07 02 00 00 00 24 00 00
+
 ; *************************************************
 ; Miscellaneous
 ; *************************************************
 
-.error-correction/par2 .par2
+.misc/par2 .par2
 00000000: 'PAR2' 00 'PKT'
+
+.misc/uce .uce
+00000000: 'UCE'
+
+.misc/sfm .sfm
+00000000: 'RSFM'

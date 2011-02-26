@@ -21,7 +21,7 @@ namespace FileSignatures
                 int decoded = decoder.GetChars(bytes, 4, bytes.Length - 4, chars, 0);
                 if (decoded > (int)(((toRead - 4) / 4) * 0.9))
                 {
-                    yield return new ContentFormat("text", TextCategory(bytes, decoder), "utf-32/big-endian", (decoded * 4) + 4, "text/plain", ".txt");
+                    yield return CreateTextFormat("utf-32/big-endian", decoder, bytes, (decoded * 4) + 4);
                     yield break;
                 }
             }
@@ -33,7 +33,7 @@ namespace FileSignatures
                 int decoded = decoder.GetChars(bytes, 4, bytes.Length - 4, chars, 0);
                 if (decoded > (int)(((toRead - 4) / 4) * 0.9))
                 {
-                    yield return new ContentFormat("text", TextCategory(bytes, decoder), "utf-32/little-endian", (decoded * 4) + 4, "text/plain", ".txt");
+                    yield return CreateTextFormat("utf-32/little-endian", decoder, bytes, (decoded * 4) + 4);
                     yield break;
                 }
             }
@@ -45,7 +45,7 @@ namespace FileSignatures
                 int decoded = decoder.GetChars(bytes, 2, bytes.Length - 2, chars, 0);
                 if (decoded > (int)(((toRead - 2) / 2) * 0.9))
                 {
-                    yield return new ContentFormat("text", TextCategory(bytes, decoder), "utf-16/big-endian", (decoded * 2) + 2, "text/plain", ".txt");
+                    yield return CreateTextFormat("utf-16/big-endian", decoder, bytes, (decoded * 2) + 2);
                     yield break;
                 }
             }
@@ -57,7 +57,7 @@ namespace FileSignatures
                 int decoded = decoder.GetChars(bytes, 2, bytes.Length - 2, chars, 0);
                 if (decoded > (int)(((toRead - 2) / 2) * 0.9))
                 {
-                    yield return new ContentFormat("text", TextCategory(bytes, decoder), "utf-16/little-endian", (decoded * 2) + 2, "text/plain", ".txt");
+                    yield return CreateTextFormat("utf-16/little-endian", decoder, bytes, (decoded * 2) + 2);
                     yield break;
                 }
             }
@@ -69,7 +69,7 @@ namespace FileSignatures
                 int decoded = decoder.GetChars(bytes, 3, bytes.Length - 3, chars, 0);
                 if (decoded > (int)(((toRead - 3) / 2) * 0.8))
                 {
-                    yield return new ContentFormat("text", TextCategory(bytes, decoder), "utf-8", (decoded * 2) + 2, "text/plain", ".txt");
+                    yield return CreateTextFormat("utf-8", decoder, bytes, (decoded * 2) + 2);
                     yield break;
                 }
             }
@@ -111,9 +111,28 @@ namespace FileSignatures
                 }
                 if (isMatch)
                 {
-                    yield return new ContentFormat("text", TextCategory(bytes, encoder.Value), encoder.Key, bytes2.Length, "text/plain", ".txt");
+                    yield return CreateTextFormat(encoder.Key, encoder.Value, bytes, bytes2.Length);
                     yield break;
                 }
+            }
+        }
+
+        private static ContentFormat CreateTextFormat(string encodingName, Encoding encoding, byte[] bytes, int confidence)
+        {
+            string name = TextCategory(bytes, encoding);
+            switch (name)
+            {
+                case "xml":
+                    return new ContentFormat("text", "xml", encodingName, confidence, "text/xml", ".xml");
+
+                case "linqpad":
+                    return new ContentFormat("text", "linqpad", encodingName, confidence, "text/plain", ".linq");
+
+                case "sln":
+                    return new ContentFormat("text", "sln", encodingName, confidence, "text/plain", ".sln");
+
+                default:
+                    return new ContentFormat("text", name, encodingName, confidence, "text/plain", ".txt");
             }
         }
 
@@ -124,6 +143,8 @@ namespace FileSignatures
                 return "xml";
             if (s.Contains("<Query Kind="))
                 return "linqpad";
+            if (s.Contains("Microsoft Visual Studio Solution File"))
+                return "sln";
 
             return "plain";
         }
