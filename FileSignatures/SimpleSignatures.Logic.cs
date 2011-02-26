@@ -17,7 +17,7 @@ namespace FileSignatures
                 return false;
 
             for (int index = 0; index < values.Length; index++)
-                if (values[index] == -1 || values[index] != fromContainer[index])
+                if (values[index] != -1 && values[index] != fromContainer[index])
                     return false;
 
             return true;
