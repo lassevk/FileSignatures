@@ -11,8 +11,6 @@ namespace FileSignatures
     [ContentIdentifier]
     internal partial class SimpleSignatures : IContentIdentifier
     {
-        #region IContentIdentifier Members
-
         public IEnumerable<ContentFormat> Identify(IByteContainer container)
         {
             bool isMatch;
@@ -179,7 +177,5 @@ namespace FileSignatures
 
             yield break;
         }
-
-        #endregion
     }
 }
