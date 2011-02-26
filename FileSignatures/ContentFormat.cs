@@ -17,6 +17,7 @@ namespace FileSignatures
         private readonly string _Name;
         private readonly string _Version;
         private readonly string _MimeType;
+        private readonly string _FileExtension;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ContentFormat"/> struct.
@@ -38,6 +39,9 @@ namespace FileSignatures
         /// <param name="mimeType">
         /// The official mime-type for the content format.
         /// </param>
+        /// <param name="fileExtension">
+        /// The default file extension for files of this type.
+        /// </param>
         /// <exception cref="ArgumentNullException">
         /// <para><paramref name="category"/> is <c>null</c> or empty.</para>
         /// <para>- or -</para>
@@ -46,11 +50,13 @@ namespace FileSignatures
         /// <para><paramref name="version"/> is <c>null</c>.</para>
         /// <para>- or -</para>
         /// <para><paramref name="mimeType"/> is <c>null</c>.</para>
+        /// <para>- or -</para>
+        /// <para><paramref name="fileExtension"/> is <c>null</c>.</para>
         /// </exception>
         /// <exception cref="ArgumentOutOfRangeException">
         /// <para><paramref name="confidence"/> is zero or less.</para>
         /// </exception>
-        public ContentFormat(string category, string name, string version, int confidence, string mimeType)
+        public ContentFormat(string category, string name, string version, int confidence, string mimeType, string fileExtension)
         {
             if (StringEx.IsNullOrWhiteSpace(category))
                 throw new ArgumentNullException("category");
@@ -62,12 +68,15 @@ namespace FileSignatures
                 throw new ArgumentOutOfRangeException("confidence", confidence, "confidence must be greater than zero");
             if (mimeType == null)
                 throw new ArgumentNullException("mimeType");
+            if (fileExtension == null)
+                throw new ArgumentNullException("fileExtension");
 
             _Category = category.Trim();
             _Name = name.Trim();
             _Version = version.Trim();
             _Confidence = confidence;
             _MimeType = mimeType.Trim();
+            _FileExtension = fileExtension.Trim();
         }
 
         /// <summary>
@@ -129,6 +138,17 @@ namespace FileSignatures
             }
         }
 
+        /// <summary>
+        /// Gets the default file extension for files of this type.
+        /// </summary>
+        public string FileExtension
+        {
+            get
+            {
+                return _FileExtension;
+            }
+        }
+
         #region IEquatable<ContentFormat> Members
 
         /// <summary>
@@ -142,7 +162,7 @@ namespace FileSignatures
         /// </param>
         public bool Equals(ContentFormat other)
         {
-            return Equals(other._Category, _Category) && Equals(other._Name, _Name) && Equals(other._Version, _Version) && (other._Confidence == _Confidence) && Equals(other._MimeType, _MimeType);
+            return Equals(other._Category, _Category) && Equals(other._Name, _Name) && Equals(other._Version, _Version) && (other._Confidence == _Confidence) && Equals(other._MimeType, _MimeType) && Equals(other._FileExtension, _FileExtension);
         }
 
         #endregion
@@ -220,6 +240,7 @@ namespace FileSignatures
                 result = (result * 397) ^ (_Version != null ? _Version.GetHashCode() : 0);
                 result = (result * 397) ^ _Confidence.GetHashCode();
                 result = (result * 397) ^ (_MimeType != null ? _MimeType.GetHashCode() : 0);
+                result = (result * 397) ^ (_FileExtension != null ? _FileExtension.GetHashCode() : 0);
                 return result;
             }
         }

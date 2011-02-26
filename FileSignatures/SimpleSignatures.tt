@@ -11,7 +11,7 @@ var data = File.ReadAllLines(Host.TemplateFile.Replace(".tt", ".txt"))
     .Where(l => !l.StartsWith(";"))
     .ToArray();
 
-var re = new Regex(@"^(?<end>-)?(?<offset>[0-9a-f]{8}):\s+(?<number>([0-9a-f]{2}|'[^']+'|\.\.?))(\s+(?<number>([0-9a-f]{2}|'[^']+'|\.\.?)))*\s*$", RegexOptions.IgnoreCase);
+var re = new Regex(@"^(?<end>-)?(?<offset>[0-9a-f]{7,8}):\s+(?<number>([0-9a-f]{2}|'[^']+'|\.\.?))(\s+(?<number>([0-9a-f]{2}|'[^']+'|\.\.?)))*\s*$", RegexOptions.IgnoreCase);
 Func<string, string> formatted = delegate(string s)
 {
     s = s.Replace("\n", "\\n").Replace("\r", "\\r").Replace("\t", "\\t").Replace("\"", "\\\"");
@@ -59,6 +59,13 @@ namespace FileSignatures
         {
             string mimeType = "string.Empty";
             string line = data[index];
+            string extension = "string.Empty";
+            int extIndex = line.LastIndexOf(" .");
+            if (extIndex > 0)
+            {
+                extension = "\"" + line.Substring(extIndex).Trim() + "\"";
+                line = line.Substring(0, extIndex).Trim();
+            }
             int mimeIndex = line.IndexOf('(');
             if (mimeIndex > 0)
             {
@@ -110,6 +117,7 @@ namespace FileSignatures
                 partsOutput.Add("string.Empty");
             partsOutput.Add(length.ToString());
             partsOutput.Add(mimeType);
+            partsOutput.Add(extension);
 #>
             if (isMatch)
                 yield return new ContentFormat(<#= string.Join(", ", partsOutput) #>);
