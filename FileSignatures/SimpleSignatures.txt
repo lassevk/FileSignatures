@@ -23,6 +23,9 @@
 .archive/wim
 00000000: 'MSWIM' 00
 
+.archive/xz (application/x-xz)
+00000000: fd '7zXZ' 00
+
 ; *************************************************
 ; Images
 ; *************************************************
@@ -95,8 +98,8 @@
 .audio/wave (audio/x-wav)
 00000000: 'RIFF' .. .. .. .. 'WAVE'
 
-.audio/ogg
-00000000: 'Ogg'
+.audio/ogg (application/ogg)
+00000000: 'OggS'
 
 .audio/midi (audio/mid)
 00000000: 'MThd'
